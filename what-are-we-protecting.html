@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Are We Actually Trying to Protect? — Yogesh Rajaram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%2310141a'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%23c99a3c' font-family='monospace'%3E%3E_%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="What Are We Actually Trying to Protect? — Yogesh Rajaram">
+<meta property="og:description" content="A beginner's guide to understanding what cybersecurity really means — beyond hackers, firewalls, and passwords.">
+<meta property="og:image" content="https://yogeshrajaram.space/og-image.png">
+<meta property="og:url" content="https://yogeshrajaram.space/blog/what-are-we-protecting.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  .post-wrap{ max-width: 720px; }
+
+  .post-kicker{
+    font-family: var(--mono); font-size: 11.5px; color: var(--teal);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;
+  }
+  .post-title{
+    font-family: var(--mono); font-size: clamp(26px, 5vw, 36px); font-weight: 600;
+    color: var(--text); line-height: 1.25; margin: 0 0 12px;
+  }
+  .post-dek{
+    font-family: var(--sans); font-size: 16px; color: var(--text-dim);
+    font-style: italic; margin: 0 0 18px; max-width: 62ch;
+  }
+  .post-meta{
+    font-family: var(--mono); font-size: 11.5px; color: var(--text-faint);
+    display:flex; gap: 14px; margin-bottom: 34px; flex-wrap: wrap;
+  }
+
+  .post-body{ font-family: var(--sans); }
+  .post-body p{
+    color: var(--text-dim); font-size: 16px; line-height: 1.75; margin: 0 0 16px;
+  }
+  .post-body h2{
+    font-family: var(--mono); font-size: 20px; color: var(--text);
+    margin: 44px 0 6px; padding-top: 20px; border-top: 1px solid var(--line);
+  }
+  .post-body h2 .num{ color: var(--amber); margin-right: 8px; }
+  .post-body h3{
+    font-family: var(--sans); font-weight: 600; font-size: 17px; color: var(--text);
+    margin: 26px 0 8px;
+  }
+  .post-body ul, .post-body ol{ color: var(--text-dim); font-size: 15.5px; line-height: 1.7; padding-left: 22px; margin: 0 0 16px; }
+  .post-body li{ margin-bottom: 5px; }
+  .post-body strong{ color: var(--text); }
+
+  .lede::first-letter{
+    font-family: var(--mono); font-size: 58px; float: left; line-height: 0.8;
+    padding: 8px 10px 0 0; color: var(--amber); font-weight: 600;
+  }
+
+  .callout{
+    border-left: 3px solid var(--amber);
+    background: var(--bg-panel);
+    padding: 16px 20px;
+    margin: 22px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .callout p{ margin: 0; color: var(--text); font-size: 16px; font-style: italic; }
+  .callout p strong{ color: var(--amber); font-style: normal; }
+
+  .post-img{
+    width: 100%; border-radius: 8px; border: 1px solid var(--line);
+    margin: 26px 0 6px; display: block;
+    background: #fff;
+  }
+  .post-img-caption{
+    font-family: var(--mono); font-size: 11.5px; color: var(--text-faint);
+    text-align: center; margin-bottom: 26px;
+  }
+
+  .flow-chain{
+    display:flex; flex-direction: column; align-items: flex-start; gap: 0;
+    margin: 20px 0;
+  }
+  .flow-chain .flow-step{
+    font-family: var(--mono); font-size: 13.5px; color: var(--text);
+    background: var(--bg-panel); border: 1px solid var(--line);
+    padding: 8px 14px; border-radius: 6px;
+  }
+  .flow-chain .flow-step.q{ color: var(--amber); border-color: rgba(201,154,60,0.35); background: rgba(201,154,60,0.06); }
+  .flow-chain .flow-arrow{
+    font-family: var(--mono); color: var(--teal); font-size: 15px; padding: 2px 0 2px 22px;
+  }
+
+  .hflow{
+    display:flex; align-items:center; flex-wrap: wrap; gap: 0; margin: 20px 0;
+  }
+  .hflow .flow-step{
+    font-family: var(--mono); font-size: 12.5px; color: var(--text);
+    background: var(--bg-panel); border: 1px solid var(--line);
+    padding: 7px 12px; border-radius: 6px; white-space: nowrap;
+  }
+  .hflow .flow-arrow{ font-family: var(--mono); color: var(--teal); font-size: 15px; padding: 0 8px; }
+
+  .cia-table, .attack-table{
+    width: 100%; border-collapse: collapse; margin: 18px 0 24px; font-size: 14.5px;
+  }
+  .cia-table th, .cia-table td, .attack-table th, .attack-table td{
+    border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; color: var(--text-dim);
+  }
+  .cia-table th, .attack-table th{
+    font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--text-faint); font-weight: 500;
+  }
+  .attack-table td.prop{ color: var(--amber); font-weight: 600; }
+
+  .qbox{
+    text-align: center; padding: 30px 20px; margin: 26px 0;
+    background: var(--bg-panel); border: 1px solid var(--line); border-radius: 10px;
+  }
+  .qbox p{
+    font-family: var(--mono); font-size: 18px; color: var(--amber);
+    margin: 0; line-height: 1.5;
+  }
+
+  .exercise-list{ columns: 2; column-gap: 28px; }
+  @media (max-width: 620px){ .exercise-list{ columns: 1; } }
+  .exercise-list li{ break-inside: avoid; }
+
+  .end-nav{
+    display:flex; justify-content: space-between; align-items:center;
+    margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 13px;
+  }
+  .end-nav a{ color: var(--teal); text-decoration: none; }
+</style>
+<script>
+  (function(){
+    var saved = localStorage.getItem('theme');
+    if(saved === 'light'){ document.documentElement.setAttribute('data-theme','light'); }
+  })();
+</script>
+</head>
+<body class="has-dog">
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html">yogesh<span class="dot">.</span>rajaram</a>
+    <div class="nav-group">
+      <nav>
+        <a href="../about.html">about</a>
+        <a href="../experience.html">experience</a>
+        <a href="../skills.html">skills</a>
+        <a href="../certifications.html">certifications</a>
+        <a href="../projects.html">projects</a>
+        <a href="../education.html">education</a>
+        <a href="blog-home.html" class="current">blog</a>
+        <a href="../contact.html">contact</a>
+      </nav>
+      <div class="topbar-actions">
+        <a href="../Yogesh_Rajaram_CV.pdf" download class="cv-link">download cv</a>
+        <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark theme"><span id="theme-toggle-label">Light</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap post-wrap">
+  <div class="crumb-bar"><a href="../index.html">~/</a><a href="../about.html">~/about</a><a href="../experience.html">~/experience</a><a href="../skills.html">~/skills</a><a href="../certifications.html">~/certifications</a><a href="../projects.html">~/projects</a><a href="../education.html">~/education</a><a href="blog-home.html" class="current">~/blog</a><a href="../contact.html">~/contact</a></div>
+
+
+  <section class="page-header">
+    <a class="back" href="blog-home.html">← back to blog</a>
+  </section>
+
+  <section class="reveal">
+    <div class="post-kicker">$ cd ~/blog/post-01</div>
+    <h1 class="post-title">Cybersecurity: What Are We Actually Trying to Protect?</h1>
+    <p class="post-dek">A beginner's guide to understanding what cybersecurity really means — beyond hackers, firewalls, and passwords.</p>
+    <div class="post-meta">
+      <span>POST 01</span>
+      <span>·</span>
+      <span>~14 min read</span>
+      <span>·</span>
+      <span>Fundamentals series</span>
+    </div>
+
+    <div class="post-body">
+
+      <p class="lede">When most people hear the word <strong>cybersecurity</strong>, they immediately imagine a few familiar things: a hacker sitting in a dark room, someone typing extremely fast into a black terminal, a firewall blocking an attack, a company receiving a ransomware note, or perhaps an employee being told "don't click suspicious links."</p>
+
+      <p>All of these things are part of cybersecurity. But they aren't cybersecurity itself.</p>
+
+      <div class="qbox"><p>What are we actually trying to protect?</p></div>
+
+      <p>Because before you can secure something, you need to understand what matters. A company doesn't simply need to "protect its computers." It needs to protect its <strong>people, identities, information, applications, systems, money, reputation, customers, and ability to continue operating.</strong> And that's where our cybersecurity journey begins.</p>
+
+      <h2><span class="num">01</span>So... What Exactly Is Cybersecurity?</h2>
+      <p>At its simplest, cybersecurity is about protecting digital systems, information, and the people and processes connected to them from unauthorized access, misuse, disruption, modification, or destruction. NIST describes cybersecurity in terms of protecting cyberspace and the information and systems within it, including ensuring confidentiality, integrity, and availability.</p>
+      <p>That sounds simple. But there's an important detail hidden inside that definition — cybersecurity isn't only about stopping attackers. It's also about:</p>
+      <ul>
+        <li>preventing problems,</li>
+        <li>detecting problems,</li>
+        <li>responding when something goes wrong,</li>
+        <li>recovering from incidents,</li>
+        <li>reducing business impact,</li>
+        <li>and making sure the organization can continue operating.</li>
+      </ul>
+      <div class="callout"><p>Cybersecurity is not just about building a wall. It's also about knowing what you're protecting, noticing when someone gets through, responding quickly, and recovering afterward.</p></div>
+
+      <h2><span class="num">02</span>Let's Forget Hackers for a Moment</h2>
+      <p>Imagine you own a small online business with 25 employees, a company website, an online payment system, employee email accounts, customer accounts, a customer database, an accounting system, laptops, smartphones, cloud storage, social media accounts, and business contracts.</p>
+      <p>Now imagine someone asks: <strong>"What do you need to protect?"</strong> You might initially say "my computers." But that's not really the answer.</p>
+      <p>What happens if someone steals your customer database? Changes your bank account details? Takes your website offline for three days? Compromises an employee's email? Leaks your customer information? Deletes your business documents? Encrypts your files with ransomware?</p>
+      <p>Suddenly, cybersecurity becomes much bigger than computers.</p>
+
+      <h2><span class="num">03</span>What Are We Actually Protecting?</h2>
+      <p>Let's break it down.</p>
+
+      <img class="post-img" src="assets/blog1-picture1.png" alt="The Cybersecurity Universe — People, Identities, Devices, Applications, Data, Cloud, Business">
+      <div class="post-img-caption">The Cybersecurity Universe: everything is connected, everything needs protection.</div>
+
+      <h3>👤 People</h3>
+      <p>Employees interact with email, applications, websites, customers, documents, cloud systems, passwords, company devices, and sensitive information. An employee clicking a malicious link could become the starting point of a major incident. That doesn't mean "employees are the weakest link" — a better way to think about it: <strong>people operate the systems that organizations depend on, so security has to work for people, not just against them.</strong></p>
+
+      <h3>🔑 Identities and Credentials</h3>
+      <p>A username and password can provide access to email, financial systems, customer databases, cloud environments, internal applications, source code, administrative systems, and sensitive documents. If an attacker obtains someone's credentials, they may not need to "hack" the system — they can simply log in. This is why modern cybersecurity places enormous importance on authentication, authorization, multi-factor authentication, privileged access, identity governance, and access controls.</p>
+
+      <h3>💻 Devices</h3>
+      <p>Laptops, desktops, smartphones, servers, printers, network equipment, virtual machines, cloud workloads, IoT devices — every device is a potential entry point. A device doesn't have to be hacked directly; an attacker might compromise an employee's account, then their laptop, then an internal application, then a database. The laptop is simply one step in a larger attack. This is why endpoint security, patching, encryption, configuration management, and monitoring matter. CISA recommends measures such as encryption and secure backups, since unauthorized access to an unencrypted device can expose or allow manipulation of stored information.</p>
+
+      <h3>📄 Data</h3>
+      <p>This is one of the biggest things cybersecurity actually protects — customer data (names, addresses, account info), employee data (salaries, IDs, benefits), financial data (bank details, invoices, tax info), business information (contracts, strategies, IP), and technical information (source code, API keys, credentials). Cybersecurity professionals need to understand what data exists, where it's stored, who can access it, how it moves, and what happens if it's compromised.</p>
+
+      <h3>☁️ Cloud Environments</h3>
+      <p>The days when all company information lived in a server room are long gone. The question isn't "is the server protected?" anymore — it's "who can access the cloud environment, what permissions do they have, is storage publicly accessible, are credentials protected, are logs enabled, are configurations secure, and what happens if an admin account is compromised?"</p>
+
+      <h3>🌐 Applications</h3>
+      <p>Banking apps, shopping sites, HR portals, healthcare apps, customer portals, APIs — every application processes information and performs actions, so every application needs security. Imagine a banking app where changing the account number in the URL reveals another customer's balance. The problem isn't the password — it's <strong>access control.</strong> The OWASP Top 10 covers common risks here, including broken access control, security misconfiguration, and injection.</p>
+
+      <h3>🏢 The Business Itself</h3>
+      <p>A company can lose more than data — money, customers, productivity, IP, reputation, regulatory standing, and trust. Imagine a retailer whose website goes down during a major sale. No data was stolen, no ransomware deployed — but the company loses millions in sales. Is that a cybersecurity problem? Yes — because <strong>availability is part of security.</strong></p>
+
+      <h2><span class="num">04</span>The CIA Triad</h2>
+      <p>No, not the intelligence agency. In information security, CIA stands for <strong>Confidentiality, Integrity, and Availability</strong> — one of the foundational models of the field. NIST describes these as the three pillars of information security. Let's walk through a payroll database example.</p>
+
+      <img class="post-img" src="assets/blog1-picture2.png" alt="The CIA Triad — Confidentiality, Integrity, Availability">
+      <div class="post-img-caption">Confidentiality, Integrity, Availability — the three pillars of information security.</div>
+
+      <h3>🔒 Confidentiality — "Who can see this?"</h3>
+      <p>An attacker steals the payroll database. The information is now in the hands of someone who shouldn't have it. That's a confidentiality failure — think leaked customer databases, exposed salaries, or stolen password databases.</p>
+
+      <h3>✏️ Integrity — "Can we trust this?"</h3>
+      <p>Nobody steals the database this time — instead, someone secretly changes an employee's salary from ₹60,000 to ₹6,00,000, or worse, edits the bank account number. The data is still there and still accessible, but it can no longer be trusted. NIST frames integrity around preventing improper modification and keeping information trustworthy.</p>
+
+      <h3>⚡ Availability — "Can we access it when we need it?"</h3>
+      <p>Now the attacker encrypts the entire payroll database. Nobody can access it. Employees can't be paid. The information still exists — it's just unavailable. Ransomware is the classic example, since attackers deny organizations access to their own systems or data.</p>
+
+      <h2><span class="num">05</span>One Database. Three Different Security Problems.</h2>
+      <p>This is worth remembering — the exact same payroll database can fail in three completely different ways:</p>
+
+      <img class="post-img" src="assets/blog1-picture3.png" alt="One database, three attacks — stolen, modified, locked">
+      <div class="post-img-caption">Stolen, modified, or locked — three outcomes, three different failures.</div>
+
+      <table class="cia-table">
+        <tr><th>Attack</th><th>Security Property Affected</th></tr>
+        <tr><td>Hacker steals employee salaries</td><td>Confidentiality</td></tr>
+        <tr><td>Hacker changes bank details</td><td>Integrity</td></tr>
+        <tr><td>Ransomware locks the database</td><td>Availability</td></tr>
+      </table>
+
+      <p>An organization can experience all three at once. A ransomware group could steal company data, modify or encrypt systems, make everything unavailable, demand payment, and threaten to publish what they stole — one incident, multiple security objectives affected. That's why the useful questions aren't just "did someone hack us?" but: what happened, what was affected, what was exposed, what changed, what became unavailable, how long were we affected, and what's the business impact?</p>
+
+      <h2><span class="num">06</span>Security Isn't About Protecting Everything Equally</h2>
+      <p>Organizations have limited money, people, time, technology, and attention. A public company brochure and customer payment information don't need — and shouldn't get — the same level of protection. This is where one of cybersecurity's most important ideas comes in: <strong>risk.</strong></p>
+
+      <h2><span class="num">07</span>What Is Cybersecurity Risk?</h2>
+      <p>Imagine your company's admin account has no MFA. Is that automatically an incident? No. Is it a vulnerability? Potentially. Does it create risk? Absolutely — because if someone obtains the password, they may access a highly privileged account.</p>
+
+      <div class="flow-chain">
+        <div class="flow-step q">Threat — someone wants to compromise the account</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Vulnerability — the account has weak protection</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Potential Impact — the attacker gains powerful access</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Risk — possibility of significant business harm</div>
+      </div>
+
+      <div class="callout"><p>A vulnerability is a weakness. <strong>Risk</strong> is about what could happen because of that weakness.</p></div>
+
+      <h2><span class="num">08</span>So How Do We Protect All This?</h2>
+      <p>Now for the things people usually associate with cybersecurity:</p>
+      <ul>
+        <li><strong>Firewalls</strong> — control network traffic</li>
+        <li><strong>Antivirus / Endpoint Protection</strong> — identify and prevent malicious activity on devices</li>
+        <li><strong>Encryption</strong> — protect information so unauthorized people can't easily read it</li>
+        <li><strong>Multi-Factor Authentication</strong> — a layer of verification beyond a password</li>
+        <li><strong>Access Controls</strong> — determine who can access what</li>
+        <li><strong>Backups</strong> — recover from data loss and destructive incidents</li>
+        <li><strong>Security Monitoring</strong> — identify suspicious activity</li>
+        <li><strong>Vulnerability Management</strong> — find and address weaknesses</li>
+        <li><strong>Security Awareness</strong> — help people recognize and respond to threats</li>
+        <li><strong>Incident Response</strong> — a structured way to respond when something goes wrong</li>
+        <li><strong>Policies and Procedures</strong> — define how security should be managed</li>
+      </ul>
+      <p>And this list is only the beginning.</p>
+
+      <h2><span class="num">09</span>Cybersecurity Is a System, Not a Single Product</h2>
+      <p>A company doesn't become secure because it bought "the world's best firewall." Security is a combination of <strong>People + Processes + Technology.</strong> You may have excellent MFA, but if employees share credentials, security suffers. You may have great endpoint protection, but if critical systems aren't patched, risk remains. You may have backups, but if nobody has tested restoring them, you don't really know if they'll work. You may have a policy, but if nobody follows it, the policy alone protects nothing. Security works when the pieces work <strong>together.</strong></p>
+
+      <h2><span class="num">10</span>Cybersecurity Doesn't End When the Attack Is Prevented</h2>
+      <p>Say an organization successfully blocks a phishing attack. Great — but it shouldn't stop there. What happened? How did we detect it? Did anyone click the link? Did the controls work? Could the same attack happen tomorrow? This is why cybersecurity is continuous.</p>
+
+      <img class="post-img" src="assets/blog1-picture4.png" alt="From Beginner to Cybersecurity Professional — a six-step roadmap">
+      <div class="post-img-caption">Identify → Protect → Detect → Respond → Recover — a continuous cycle, not a one-time fix.</div>
+
+      <p>NIST's cybersecurity framework organizes activities around <strong>Identify, Protect, Detect, Respond, and Recover</strong>; the newer framework also places governance at the center of risk management.</p>
+      <ul>
+        <li><strong>Identify</strong> — what do we have, and what could go wrong?</li>
+        <li><strong>Protect</strong> — what can we do to reduce the risk?</li>
+        <li><strong>Detect</strong> — how will we know something is wrong?</li>
+        <li><strong>Respond</strong> — what will we do when something happens?</li>
+        <li><strong>Recover</strong> — how will we get back to normal?</li>
+        <li><strong>Govern</strong> — how do we make cybersecurity part of how the organization is managed?</li>
+      </ul>
+
+      <h2><span class="num">11</span>Cybersecurity Is Also About Trust</h2>
+      <p>When you log into your bank, you trust your information is private, your balance is accurate, and your money is available. When you shop online, you trust your payment details are protected. When you send a business email, you trust the recipient is who they claim to be. Cybersecurity helps maintain that trust — and when it disappears, the damage extends far beyond the technical system.</p>
+
+      <h2><span class="num">12</span>What Happens When Cybersecurity Fails?</h2>
+      <p>Consider <strong>ABC Retail</strong> — 500 employees, 2 million customers, an online platform, a customer database, internal ERP, cloud infrastructure. One employee falls for a phishing email and enters their credentials into a fake login page.</p>
+
+      <div class="hflow">
+        <div class="flow-step">Email access</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Search inbox</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Find system details</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Higher-privilege account</div>
+      </div>
+      <div class="hflow">
+        <div class="flow-step">Internal application</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Customer database</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Copy customer data</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Encrypt systems</div>
+      </div>
+
+      <table class="attack-table">
+        <tr><th>Property</th><th>What happened</th></tr>
+        <tr><td class="prop">Confidentiality</td><td>Customer information was stolen</td></tr>
+        <tr><td class="prop">Integrity</td><td>Systems or information may have been modified</td></tr>
+        <tr><td class="prop">Availability</td><td>Systems became inaccessible</td></tr>
+      </table>
+
+      <p>Business impact could include operational disruption, financial losses, customer complaints, investigation costs, legal obligations, regulatory consequences, reputational damage, and loss of trust. <strong>It all started with one compromised identity.</strong> That's why cybersecurity professionals think about the entire chain, not just individual tools.</p>
+
+      <h2><span class="num">13</span>The Cybersecurity Mindset</h2>
+      <p>Whenever you see a system, application, process, or piece of information, try asking these eight questions:</p>
+      <ol>
+        <li><strong>What are we protecting?</strong> What is valuable?</li>
+        <li><strong>Who should have access?</strong> Who is authorized?</li>
+        <li><strong>What could go wrong?</strong> What threats exist?</li>
+        <li><strong>What weaknesses exist?</strong> Where could it fail?</li>
+        <li><strong>What would happen if it failed?</strong> What's the impact?</li>
+        <li><strong>How would we know?</strong> What would we monitor?</li>
+        <li><strong>What would we do?</strong> How would we respond?</li>
+        <li><strong>How would we recover?</strong> How do we restore normal operations?</li>
+      </ol>
+      <p>Those eight questions will take you surprisingly far.</p>
+
+      <h2><span class="num">14</span>Where Does This Take Us?</h2>
+      <p>This article is intentionally basic — but every concept here connects to something more advanced:</p>
+
+      <div class="flow-chain">
+        <div class="flow-step q">"Who should have access?"</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Identity &amp; Access Management</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Privileged Access Management</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Zero Trust</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Cloud IAM</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Identity Governance</div>
+      </div>
+
+      <div class="flow-chain">
+        <div class="flow-step q">"What could go wrong?"</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Threat Modeling</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Vulnerability Management</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Threat Intelligence</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Attack Surface Management</div>
+      </div>
+
+      <div class="flow-chain">
+        <div class="flow-step q">"How would we know?"</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Logging</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">SIEM</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">EDR</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">SOC</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Detection Engineering</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Threat Hunting</div>
+      </div>
+
+      <div class="flow-chain">
+        <div class="flow-step q">"How would we respond?"</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Incident Response</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Digital Forensics</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Malware Analysis</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Threat Containment</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Recovery</div>
+      </div>
+
+      <div class="flow-chain">
+        <div class="flow-step q">"How do we manage cybersecurity across the org?"</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Risk Management</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Security Policies</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">GRC</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">ISO 27001</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">NIST CSF</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Third-Party Risk</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Security Audits</div>
+      </div>
+
+      <p>Cybersecurity isn't a collection of random technologies. It's a connected discipline — and that's why we're starting here.</p>
+
+      <div class="qbox">
+        <p>Cybersecurity isn't really about protecting computers.<br>It's about protecting what those computers make possible.</p>
+      </div>
+
+      <p>Computers hold information. Applications perform business functions. Networks connect people and systems. Cloud platforms run businesses. Identities provide access. Data creates value. And people make everything work. Cybersecurity exists to protect all of it.</p>
+
+      <h2><span class="num">15</span>A Quick Exercise</h2>
+      <p>Before moving to the next post, pick something you use every day:</p>
+      <ul class="exercise-list">
+        <li>Gmail</li>
+        <li>WhatsApp</li>
+        <li>Instagram</li>
+        <li>Your bank's mobile app</li>
+        <li>Your company's HR portal</li>
+        <li>Amazon</li>
+        <li>Google Drive</li>
+        <li>Microsoft 365</li>
+      </ul>
+      <p>Now ask yourself: what are we protecting, what information does it contain, who should have access, what happens if someone steals it, what happens if someone changes it, what happens if the service goes down, what would an attacker want, and what controls could reduce the risk? You don't need the technical answers yet — the goal is to start thinking like a cybersecurity professional.</p>
+
+      <h2><span class="num">16</span>What's Next?</h2>
+      <p>Now that we understand what we're trying to protect, the next question gets interesting: <strong>how does someone actually attack it?</strong> In the next post, we'll follow a realistic attack from beginning to end, starting with something surprisingly simple — a person.</p>
+
+      <div class="hflow">
+        <div class="flow-step">Public information</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Reconnaissance</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Phishing</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Credential theft</div>
+      </div>
+      <div class="hflow">
+        <div class="flow-step">Account compromise</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Privilege escalation</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Lateral movement</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Data theft</div>
+      </div>
+
+      <p>We'll see why a cyberattack is rarely one dramatic moment. It's usually a chain of small successes — and that's where things start getting really interesting.</p>
+
+    </div>
+
+    <div class="end-nav">
+      <a href="blog-home.html">← All posts</a>
+      <span style="color: var(--text-faint);">Post 01 of 01</span>
+    </div>
+
+  </section>
+
+</div>
+
+<footer>yogeshrajaram.space — last updated 2026</footer>
+
+<div class="status-bar">
+  <span><span class="dot">●</span> STATUS: ONLINE</span>
+  <span id="last-scan">LAST SCAN: just now</span>
+</div>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.05 });
+  revealEls.forEach(el => io.observe(el));
+
+  function updateToggleLabel(){
+    var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    var label = document.getElementById('theme-toggle-label');
+    if(label){ label.textContent = isLight ? 'Dark' : 'Light'; }
+  }
+  function toggleTheme(){
+    var html = document.documentElement;
+    var isLight = html.getAttribute('data-theme') === 'light';
+    if(isLight){ html.removeAttribute('data-theme'); localStorage.setItem('theme','dark'); }
+    else { html.setAttribute('data-theme','light'); localStorage.setItem('theme','light'); }
+    updateToggleLabel();
+  }
+  updateToggleLabel();
+
+  (function(){
+    var lastUpdated = new Date('2026-09-01T00:00:00Z');
+    var now = new Date();
+    var diffMs = now - lastUpdated;
+    var mins = Math.floor(diffMs / 60000);
+    var text;
+    if(mins < 60){ text = mins <= 1 ? 'just now' : mins + ' min ago'; }
+    else if(mins < 1440){ var hrs = Math.floor(mins/60); text = hrs + (hrs===1?' hour ago':' hours ago'); }
+    else { var days = Math.floor(mins/1440); text = days + (days===1?' day ago':' days ago'); }
+    var el = document.getElementById('last-scan');
+    if(el){ el.textContent = 'LAST SCAN: ' + text; }
+  })();
+</script>
+
+
+<!-- Dog companion -->
+<div class="dog-scene" id="dog-scene" aria-hidden="true">
+  <div class="ground-line"></div>
+
+  <span class="scene-tree" style="left:15%; font-size:26px; opacity:0.6;">&#127795;</span>
+  <span class="scene-tree" style="left:75%; font-size:22px; opacity:0.5;">&#127794;</span>
+  <span class="scene-prop" style="left:32%;">&#127934;</span>
+  <span class="scene-prop" style="left:58%;">&#129472;</span>
+
+  <div class="dog-bed">
+    <svg viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="17" cy="10" rx="17" ry="6" fill="#7a4a25"/>
+      <ellipse cx="17" cy="8" rx="13" ry="4.5" fill="#c99a3c"/>
+    </svg>
+  </div>
+
+  <div class="food-bowl">
+    <svg viewBox="0 0 20 12" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="10" cy="9" rx="9" ry="3" fill="#7a4a25"/>
+      <ellipse cx="10" cy="7" rx="7" ry="2.4" fill="#c99a3c"/>
+    </svg>
+  </div>
+
+  <button class="feeder-btn" id="feeder-btn" type="button" title="Feed the dog" aria-label="Feed the dog">&#127830;</button>
+  <div class="food-layer" id="food-layer"></div>
+
+  <div class="dog-pos" id="dog-pos">
+    <div class="speech-bubble" id="speech-bubble"></div>
+    <div class="dog-facing" id="dog-facing">
+      <div class="dog-sprite" id="dog-sprite">
+        <svg class="dog-svg" viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg">
+          <g class="part-tail" id="part-tail">
+            <path d="M15,20 C8,17 6,11 11,8 C14,11 14,16 17,18 Z" fill="#f5f1e6"/>
+            <circle cx="10" cy="9" r="2.4" fill="#7a4a25"/>
+          </g>
+          <g class="part-leg-back" id="part-leg-back">
+            <rect x="19" y="23" width="5" height="10" rx="2.5" fill="#f5f1e6"/>
+            <ellipse cx="21.5" cy="33.5" rx="3" ry="1.6" fill="#1c1f26"/>
+          </g>
+          <g class="part-leg-front" id="part-leg-front">
+            <rect x="34" y="23" width="5" height="10" rx="2.5" fill="#f5f1e6"/>
+            <ellipse cx="36.5" cy="33.5" rx="3" ry="1.6" fill="#1c1f26"/>
+          </g>
+          <ellipse cx="27" cy="20" rx="15" ry="9" fill="#c99a3c"/>
+          <ellipse cx="26" cy="25" rx="12" ry="4" fill="#f5f1e6"/>
+          <ellipse cx="23" cy="14.5" rx="9" ry="4" fill="#7a4a25"/>
+          <g class="part-head" id="part-head">
+            <circle cx="47" cy="16" r="8" fill="#c99a3c"/>
+            <ellipse cx="52.5" cy="19" rx="5" ry="4" fill="#f5f1e6"/>
+            <circle cx="56.5" cy="19" r="1.6" fill="#1c1f26"/>
+            <circle cx="45" cy="14" r="1.3" fill="#1c1f26" class="eye-open"/>
+            <path d="M43.5,14 q1.5,1.6 3,0" stroke="#1c1f26" stroke-width="1" fill="none" class="eye-closed"/>
+            <g class="part-ear" id="part-ear">
+              <path d="M43,10 C38,11 35,18 38,25 C40,28 44,27 44,22 C44,17 44,13 43,10 Z" fill="#7a4a25"/>
+            </g>
+          </g>
+        </svg>
+        <div class="zzz" id="zzz"><span>z</span><span>z</span><span>z</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var scene = document.getElementById('dog-scene');
+  if(!scene) return;
+  var dogPos = document.getElementById('dog-pos');
+  var dogFacing = document.getElementById('dog-facing');
+  var dogSprite = document.getElementById('dog-sprite');
+  var feederBtn = document.getElementById('feeder-btn');
+  var foodLayer = document.getElementById('food-layer');
+  var bubbleEl = document.getElementById('speech-bubble');
+
+  var BED_X = 4;
+
+  var state = 'run';
+  var x = 24;
+  var dir = 1;
+  var speed = 32;
+  var lastTime = null;
+  var sniffElapsed = 0;
+  var nextSniffAt = 7 + Math.random()*10;
+  var woofElapsed = 0;
+  var nextWoofAt = 22 + Math.random()*18;
+  var lastInteraction = Date.now();
+  var idleThreshold = 26000;
+  var hungryShown = false;
+  var approaching = false;
+  var eatingNow = false;
+  var pendingAction = null; // 'sleep' | 'eat'
+  var targetX = null;
+  var sniffTimeout = null;
+  var wakeTimeout = null;
+  var eatTimeout = null;
+  var bubbleTimeout = null;
+
+  function dogWidth(){ return 60; }
+  function sceneWidth(){ return scene.clientWidth || 300; }
+
+  function showBubble(text, duration){
+    bubbleEl.textContent = text;
+    bubbleEl.classList.add('show');
+    if(bubbleTimeout){ clearTimeout(bubbleTimeout); }
+    bubbleTimeout = setTimeout(function(){ bubbleEl.classList.remove('show'); }, duration || 2600);
+  }
+
+  function clearClasses(){
+    dogSprite.classList.remove('is-moving','is-sniffing','is-sleeping','is-eating');
+  }
+  function setState(s){
+    state = s;
+    clearClasses();
+    if(s === 'run' || s === 'wake'){ dogSprite.classList.add('is-moving'); }
+    else if(s === 'sniff'){ dogSprite.classList.add('is-sniffing'); }
+    else if(s === 'sleep'){ dogSprite.classList.add('is-sleeping'); }
+    else if(s === 'eat'){ dogSprite.classList.add('is-eating'); dogSprite.classList.add('is-moving'); }
+  }
+  setState('run');
+
+  function registerInteraction(){
+    lastInteraction = Date.now();
+    hungryShown = false;
+    if(state === 'sleep'){
+      setState('wake');
+      wakeTimeout = setTimeout(function(){ if(state === 'wake') setState('run'); }, 500);
+    }
+  }
+  ['click','scroll','keydown','touchstart'].forEach(function(evt){
+    window.addEventListener(evt, registerInteraction, { passive: true });
+  });
+
+  feederBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    registerInteraction();
+    if(sniffTimeout){ clearTimeout(sniffTimeout); sniffTimeout = null; }
+    var bowlX = sceneWidth() - 72;
+    dropFood(sceneWidth() - 62);
+    targetX = Math.max(6, bowlX - 46);
+    pendingAction = 'eat';
+    approaching = true;
+    eatingNow = false;
+    if(state !== 'eat'){ setState('run'); }
+  });
+
+  function dropFood(centerX){
+    var food = document.createElement('div');
+    food.className = 'food-item';
+    food.style.left = (centerX - 9) + 'px';
+    food.textContent = String.fromCodePoint(0x1F357);
+    foodLayer.appendChild(food);
+    setTimeout(function(){ if(food.parentNode) food.parentNode.removeChild(food); }, 3000);
+  }
+
+  setTimeout(function(){ showBubble('Hi ' + String.fromCodePoint(0x1F44B), 3000); }, 1500);
+
+  function tick(ts){
+    if(lastTime == null) lastTime = ts;
+    var dt = Math.min((ts - lastTime)/1000, 0.1);
+    lastTime = ts;
+
+    var idleMs = Date.now() - lastInteraction;
+
+    if(!hungryShown && state === 'run' && idleMs > 14000 && idleMs < idleThreshold){
+      showBubble('Hungry...', 3000);
+      hungryShown = true;
+    }
+
+    if(state !== 'sleep' && !approaching && !eatingNow && idleMs > idleThreshold){
+      if(sniffTimeout){ clearTimeout(sniffTimeout); sniffTimeout = null; }
+      pendingAction = 'sleep';
+      targetX = BED_X;
+      approaching = true;
+    }
+
+    if(approaching){
+      var dx = targetX - x;
+      var step = 70 * dt;
+      if(Math.abs(dx) <= step){
+        x = targetX;
+        approaching = false;
+        if(pendingAction === 'eat'){
+          eatingNow = true;
+          setState('eat');
+          eatTimeout = setTimeout(function(){
+            eatingNow = false;
+            pendingAction = null;
+            targetX = null;
+            setState('run');
+          }, 1300);
+        } else if(pendingAction === 'sleep'){
+          pendingAction = null;
+          targetX = null;
+          setState('sleep');
+        }
+      } else {
+        dir = dx > 0 ? 1 : -1;
+        x += step * dir;
+      }
+    } else if(state === 'run'){
+      x += dir * speed * dt;
+      var maxX = sceneWidth() - dogWidth() - 10;
+      if(x > maxX){ x = maxX; dir = -1; }
+      if(x < 10){ x = 10; dir = 1; }
+
+      sniffElapsed += dt;
+      if(sniffElapsed > nextSniffAt){
+        sniffElapsed = 0;
+        nextSniffAt = 7 + Math.random()*12;
+        setState('sniff');
+        sniffTimeout = setTimeout(function(){ if(state === 'sniff') setState('run'); }, 2000 + Math.random()*1500);
+      }
+
+      woofElapsed += dt;
+      if(woofElapsed > nextWoofAt){
+        woofElapsed = 0;
+        nextWoofAt = 25 + Math.random()*20;
+        showBubble('Woof!', 2000);
+      }
+    }
+
+    dogPos.style.transform = 'translateX(' + x + 'px)';
+    dogFacing.classList.toggle('face-left', dir < 0);
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+
+</body>
+</html>

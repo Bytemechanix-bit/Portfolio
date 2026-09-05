@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[POST TITLE] — Yogesh Rajaram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%2310141a'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%23c99a3c' font-family='monospace'%3E%3E_%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="[POST TITLE] — Yogesh Rajaram">
+<meta property="og:description" content="[One-sentence summary of the post for link previews.]">
+<meta property="og:image" content="https://yogeshrajaram.space/og-image.png">
+<meta property="og:url" content="https://yogeshrajaram.space/blog/[post-slug].html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  .post-body{ max-width: 68ch; }
+  .post-body p{ color: var(--text-dim); font-size: 15.5px; margin-bottom: 18px; }
+  .post-body h3{ color: var(--text); font-size: 18px; margin: 32px 0 12px; }
+  .post-body ul, .post-body ol{ color: var(--text-dim); font-size: 15px; padding-left: 20px; margin-bottom: 18px; }
+  .post-body li{ margin-bottom: 6px; }
+  .post-body code{ font-family: var(--mono); background: var(--bg-panel); padding: 2px 6px; border-radius: 4px; font-size: 13.5px; color: var(--teal); }
+  .post-meta{
+    font-family: var(--mono); font-size: 12px; color: var(--text-faint);
+    letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px;
+  }
+</style>
+<script>
+  (function(){
+    var saved = localStorage.getItem('theme');
+    if(saved === 'light'){ document.documentElement.setAttribute('data-theme','light'); }
+  })();
+</script>
+</head>
+<body class="has-dog">
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html">yogesh<span class="dot">.</span>rajaram</a>
+    <div class="nav-group">
+      <nav>
+        <a href="../about.html">about</a>
+        <a href="../experience.html">experience</a>
+        <a href="../skills.html">skills</a>
+        <a href="../certifications.html">certifications</a>
+        <a href="../projects.html">projects</a>
+        <a href="../education.html">education</a>
+        <a href="blog-home.html" class="current">blog</a>
+        <a href="../contact.html">contact</a>
+      </nav>
+      <div class="topbar-actions">
+        <a href="../Yogesh_Rajaram_CV.pdf" download class="cv-link">download cv</a>
+        <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark theme"><span id="theme-toggle-label">Light</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="page-header">
+    <a class="back" href="blog-home.html">← back to blog</a>
+  </section>
+
+  <section class="reveal post-body" style="border-top: 1px solid var(--line);">
+    <div class="post-meta">[Month Day, Year] · [X min read]</div>
+    <h2 style="font-family: var(--mono); font-size: 26px; margin: 0 0 24px; color: var(--text);">[POST TITLE]</h2>
+
+    <p>[Opening paragraph goes here.]</p>
+
+    <h3>[Subheading]</h3>
+    <p>[Body content.]</p>
+
+  </section>
+
+</div>
+
+<footer>yogeshrajaram.space — last updated 2026</footer>
+
+<div class="status-bar">
+  <span><span class="dot">●</span> STATUS: ONLINE</span>
+  <span id="last-scan">LAST SCAN: just now</span>
+</div>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => io.observe(el));
+
+  function updateToggleLabel(){
+    var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    var label = document.getElementById('theme-toggle-label');
+    if(label){ label.textContent = isLight ? 'Dark' : 'Light'; }
+  }
+  function toggleTheme(){
+    var html = document.documentElement;
+    var isLight = html.getAttribute('data-theme') === 'light';
+    if(isLight){ html.removeAttribute('data-theme'); localStorage.setItem('theme','dark'); }
+    else { html.setAttribute('data-theme','light'); localStorage.setItem('theme','light'); }
+    updateToggleLabel();
+  }
+  updateToggleLabel();
+
+  (function(){
+    var lastUpdated = new Date('2026-09-01T00:00:00Z');
+    var now = new Date();
+    var diffMs = now - lastUpdated;
+    var mins = Math.floor(diffMs / 60000);
+    var text;
+    if(mins < 60){ text = mins <= 1 ? 'just now' : mins + ' min ago'; }
+    else if(mins < 1440){ var hrs = Math.floor(mins/60); text = hrs + (hrs===1?' hour ago':' hours ago'); }
+    else { var days = Math.floor(mins/1440); text = days + (days===1?' day ago':' days ago'); }
+    var el = document.getElementById('last-scan');
+    if(el){ el.textContent = 'LAST SCAN: ' + text; }
+  })();
+</script>
+
+
+<!-- Dog companion -->
+<div class="dog-scene" id="dog-scene" aria-hidden="true">
+  <div class="ground-line"></div>
+
+  <span class="scene-tree" style="left:15%; font-size:26px; opacity:0.6;">&#127795;</span>
+  <span class="scene-tree" style="left:75%; font-size:22px; opacity:0.5;">&#127794;</span>
+  <span class="scene-prop" style="left:32%;">&#127934;</span>
+  <span class="scene-prop" style="left:58%;">&#129472;</span>
+
+  <div class="dog-bed">
+    <svg viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="17" cy="10" rx="17" ry="6" fill="#7a4a25"/>
+      <ellipse cx="17" cy="8" rx="13" ry="4.5" fill="#c99a3c"/>
+    </svg>
+  </div>
+
+  <div class="food-bowl">
+    <svg viewBox="0 0 20 12" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="10" cy="9" rx="9" ry="3" fill="#7a4a25"/>
+      <ellipse cx="10" cy="7" rx="7" ry="2.4" fill="#c99a3c"/>
+    </svg>
+  </div>
+
+  <button class="feeder-btn" id="feeder-btn" type="button" title="Feed the dog" aria-label="Feed the dog">&#127830;</button>
+  <div class="food-layer" id="food-layer"></div>
+
+  <div class="dog-pos" id="dog-pos">
+    <div class="speech-bubble" id="speech-bubble"></div>
+    <div class="dog-facing" id="dog-facing">
+      <div class="dog-sprite" id="dog-sprite">
+        <svg class="dog-svg" viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg">
+          <g class="part-tail" id="part-tail">
+            <path d="M15,20 C8,17 6,11 11,8 C14,11 14,16 17,18 Z" fill="#f5f1e6"/>
+            <circle cx="10" cy="9" r="2.4" fill="#7a4a25"/>
+          </g>
+          <g class="part-leg-back" id="part-leg-back">
+            <rect x="19" y="23" width="5" height="10" rx="2.5" fill="#f5f1e6"/>
+            <ellipse cx="21.5" cy="33.5" rx="3" ry="1.6" fill="#1c1f26"/>
+          </g>
+          <g class="part-leg-front" id="part-leg-front">
+            <rect x="34" y="23" width="5" height="10" rx="2.5" fill="#f5f1e6"/>
+            <ellipse cx="36.5" cy="33.5" rx="3" ry="1.6" fill="#1c1f26"/>
+          </g>
+          <ellipse cx="27" cy="20" rx="15" ry="9" fill="#c99a3c"/>
+          <ellipse cx="26" cy="25" rx="12" ry="4" fill="#f5f1e6"/>
+          <ellipse cx="23" cy="14.5" rx="9" ry="4" fill="#7a4a25"/>
+          <g class="part-head" id="part-head">
+            <circle cx="47" cy="16" r="8" fill="#c99a3c"/>
+            <ellipse cx="52.5" cy="19" rx="5" ry="4" fill="#f5f1e6"/>
+            <circle cx="56.5" cy="19" r="1.6" fill="#1c1f26"/>
+            <circle cx="45" cy="14" r="1.3" fill="#1c1f26" class="eye-open"/>
+            <path d="M43.5,14 q1.5,1.6 3,0" stroke="#1c1f26" stroke-width="1" fill="none" class="eye-closed"/>
+            <g class="part-ear" id="part-ear">
+              <path d="M43,10 C38,11 35,18 38,25 C40,28 44,27 44,22 C44,17 44,13 43,10 Z" fill="#7a4a25"/>
+            </g>
+          </g>
+        </svg>
+        <div class="zzz" id="zzz"><span>z</span><span>z</span><span>z</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var scene = document.getElementById('dog-scene');
+  if(!scene) return;
+  var dogPos = document.getElementById('dog-pos');
+  var dogFacing = document.getElementById('dog-facing');
+  var dogSprite = document.getElementById('dog-sprite');
+  var feederBtn = document.getElementById('feeder-btn');
+  var foodLayer = document.getElementById('food-layer');
+  var bubbleEl = document.getElementById('speech-bubble');
+
+  var BED_X = 4;
+
+  var state = 'run';
+  var x = 24;
+  var dir = 1;
+  var speed = 32;
+  var lastTime = null;
+  var sniffElapsed = 0;
+  var nextSniffAt = 7 + Math.random()*10;
+  var woofElapsed = 0;
+  var nextWoofAt = 22 + Math.random()*18;
+  var lastInteraction = Date.now();
+  var idleThreshold = 26000;
+  var hungryShown = false;
+  var approaching = false;
+  var eatingNow = false;
+  var pendingAction = null; // 'sleep' | 'eat'
+  var targetX = null;
+  var sniffTimeout = null;
+  var wakeTimeout = null;
+  var eatTimeout = null;
+  var bubbleTimeout = null;
+
+  function dogWidth(){ return 60; }
+  function sceneWidth(){ return scene.clientWidth || 300; }
+
+  function showBubble(text, duration){
+    bubbleEl.textContent = text;
+    bubbleEl.classList.add('show');
+    if(bubbleTimeout){ clearTimeout(bubbleTimeout); }
+    bubbleTimeout = setTimeout(function(){ bubbleEl.classList.remove('show'); }, duration || 2600);
+  }
+
+  function clearClasses(){
+    dogSprite.classList.remove('is-moving','is-sniffing','is-sleeping','is-eating');
+  }
+  function setState(s){
+    state = s;
+    clearClasses();
+    if(s === 'run' || s === 'wake'){ dogSprite.classList.add('is-moving'); }
+    else if(s === 'sniff'){ dogSprite.classList.add('is-sniffing'); }
+    else if(s === 'sleep'){ dogSprite.classList.add('is-sleeping'); }
+    else if(s === 'eat'){ dogSprite.classList.add('is-eating'); dogSprite.classList.add('is-moving'); }
+  }
+  setState('run');
+
+  function registerInteraction(){
+    lastInteraction = Date.now();
+    hungryShown = false;
+    if(state === 'sleep'){
+      setState('wake');
+      wakeTimeout = setTimeout(function(){ if(state === 'wake') setState('run'); }, 500);
+    }
+  }
+  ['click','scroll','keydown','touchstart'].forEach(function(evt){
+    window.addEventListener(evt, registerInteraction, { passive: true });
+  });
+
+  feederBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    registerInteraction();
+    if(sniffTimeout){ clearTimeout(sniffTimeout); sniffTimeout = null; }
+    var bowlX = sceneWidth() - 72;
+    dropFood(sceneWidth() - 62);
+    targetX = Math.max(6, bowlX - 46);
+    pendingAction = 'eat';
+    approaching = true;
+    eatingNow = false;
+    if(state !== 'eat'){ setState('run'); }
+  });
+
+  function dropFood(centerX){
+    var food = document.createElement('div');
+    food.className = 'food-item';
+    food.style.left = (centerX - 9) + 'px';
+    food.textContent = String.fromCodePoint(0x1F357);
+    foodLayer.appendChild(food);
+    setTimeout(function(){ if(food.parentNode) food.parentNode.removeChild(food); }, 3000);
+  }
+
+  setTimeout(function(){ showBubble('Hi ' + String.fromCodePoint(0x1F44B), 3000); }, 1500);
+
+  function tick(ts){
+    if(lastTime == null) lastTime = ts;
+    var dt = Math.min((ts - lastTime)/1000, 0.1);
+    lastTime = ts;
+
+    var idleMs = Date.now() - lastInteraction;
+
+    if(!hungryShown && state === 'run' && idleMs > 14000 && idleMs < idleThreshold){
+      showBubble('Hungry...', 3000);
+      hungryShown = true;
+    }
+
+    if(state !== 'sleep' && !approaching && !eatingNow && idleMs > idleThreshold){
+      if(sniffTimeout){ clearTimeout(sniffTimeout); sniffTimeout = null; }
+      pendingAction = 'sleep';
+      targetX = BED_X;
+      approaching = true;
+    }
+
+    if(approaching){
+      var dx = targetX - x;
+      var step = 70 * dt;
+      if(Math.abs(dx) <= step){
+        x = targetX;
+        approaching = false;
+        if(pendingAction === 'eat'){
+          eatingNow = true;
+          setState('eat');
+          eatTimeout = setTimeout(function(){
+            eatingNow = false;
+            pendingAction = null;
+            targetX = null;
+            setState('run');
+          }, 1300);
+        } else if(pendingAction === 'sleep'){
+          pendingAction = null;
+          targetX = null;
+          setState('sleep');
+        }
+      } else {
+        dir = dx > 0 ? 1 : -1;
+        x += step * dir;
+      }
+    } else if(state === 'run'){
+      x += dir * speed * dt;
+      var maxX = sceneWidth() - dogWidth() - 10;
+      if(x > maxX){ x = maxX; dir = -1; }
+      if(x < 10){ x = 10; dir = 1; }
+
+      sniffElapsed += dt;
+      if(sniffElapsed > nextSniffAt){
+        sniffElapsed = 0;
+        nextSniffAt = 7 + Math.random()*12;
+        setState('sniff');
+        sniffTimeout = setTimeout(function(){ if(state === 'sniff') setState('run'); }, 2000 + Math.random()*1500);
+      }
+
+      woofElapsed += dt;
+      if(woofElapsed > nextWoofAt){
+        woofElapsed = 0;
+        nextWoofAt = 25 + Math.random()*20;
+        showBubble('Woof!', 2000);
+      }
+    }
+
+    dogPos.style.transform = 'translateX(' + x + 'px)';
+    dogFacing.classList.toggle('face-left', dir < 0);
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+
+</body>
+</html>
